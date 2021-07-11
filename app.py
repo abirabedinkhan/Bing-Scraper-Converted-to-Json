@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     q = request.args.get('q')
     data = search(q)
-    return data
+    return jsonify(data)
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='80')
