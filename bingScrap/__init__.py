@@ -26,8 +26,8 @@ def search(query):
 
     results = soup.findAll('li', {"class": "b_algo"})
     for result in results:
-        title = str(result.find('h2').text).replace(" ", " ")
-        snippet = str(result.find('p').text).replace(" ", " ")
+        title = str(getattr(result.find('h2'), 'text', None)).replace(" ", " ")
+        snippet = str(getattr(result.find('p'), 'text', None)).replace(" ", " ")
         link = result.find("a")['href']
         searchQuery = query
 
@@ -38,12 +38,9 @@ def search(query):
             "url": link,
             "q": searchQuery
         })
-
-    allData = json.dumps(data)
     
+    # if results == []:
+    #     address = "http://www.bing.com/search?q={}".format(query) + "&first=9&FORM=PERE"
+    #     search(query)
 
-    if results == []:
-        address = "http://www.bing.com/search?q={}".format(query) + "&qs=n&sp=-1&pq=pen&sc=8-3&sk=&cvid=1A850DDC66AF4543ABDD38DDF1CB9811&first=7&FORM=PERE"
-        search(query)
-
-    return allData
+    return data
